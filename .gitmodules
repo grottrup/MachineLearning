@@ -4,3 +4,6 @@
 [submodule "handson-ml"]
 	path = handson-ml
 	url = https://github.com/ageron/handson-ml.git
+[submodule "itmal"]
+	path = itmal
+	url = https://cfrigaard@bitbucket.org/cfrigaard/itmal
