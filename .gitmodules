@@ -1,6 +1,3 @@
-[submodule "Journal1"]
-	path = Journal1
-	url = https://git.overleaf.com/5c49b6cd4b03b57f1a2d7cc6
 [submodule "handson-ml"]
 	path = handson-ml
 	url = https://github.com/ageron/handson-ml.git
