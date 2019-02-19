@@ -25,7 +25,7 @@ def GetMNISTRaw():
 def MNIST_GetDataSet(mnist):
     # TODO: use mnist = fetch_mldata('MNIST original') or mnist.load_data(),
     #       but return as a single X-y tuple 
-    return mnist["data"], mnist["target"]
+    return mnist["data"], mnist["target"].astype(int)
 
 def MNIST_PlotDigit(data):
     image = data.reshape(28, 28)
