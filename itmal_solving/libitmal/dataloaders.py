@@ -1,3 +1,4 @@
+import matplotlib
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_moons
 from sklearn.datasets import make_moons
@@ -25,11 +26,12 @@ def GetMNISTRaw():
 def MNIST_GetDataSet(mnist):
     # TODO: use mnist = fetch_mldata('MNIST original') or mnist.load_data(),
     #       but return as a single X-y tuple 
-    return mnist["data"], mnist["target"].astype(int)
+    return mnist["data"], mnist['target'].astype(int)
 
 def MNIST_PlotDigit(data):
     image = data.reshape(28, 28)
-    plt.imshow(image, interpolation="nearest")
+    cmap = matplotlib.cm.binary
+    plt.imshow(image, cmap, interpolation="nearest")
     plt.show()
 
 def IRIS_GetDataSet():
