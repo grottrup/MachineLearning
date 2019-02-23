@@ -41,10 +41,12 @@ print('Working directory: ' + os.getcwd())
 coffee_data = pd.read_csv(os.getcwd() + '\\Data\\CoffeeAndCodeLT2018.csv')
 
 cleaned_data = coffee_data.drop("Country", axis=1) 
+cleaned_data = cleaned_data.drop("AgeRange", axis=1) # Not gonna look at this
+cleaned_data = cleaned_data.drop("CoffeeType", axis=1) # Not gonna look at this
+cleaned_data = cleaned_data.drop("Gender", axis=1) # Not gonna look at this
+cleaned_data = cleaned_data.drop("CodingHours", axis=1) # Don't know what they measuared
 
 cleaned_data = cleaned_data.dropna()
-
-# cleaned_data.sample(15)
 
 # Transform data
 
@@ -59,7 +61,9 @@ print(encoder.classes_)
 
 hotencoder = OneHotEncoder()
 coffee_time_cat_1hot = hotencoder.fit_transform(coffee_time_cat_encoded.reshape(-1,1))
-print(coffee_time_cat_1hot.toarray)
+print(coffee_time_cat_1hot.toarray())
+
+cleaned_data.sample(20)
 
 #
 
