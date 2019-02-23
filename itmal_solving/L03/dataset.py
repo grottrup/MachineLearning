@@ -32,16 +32,36 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 from sklearn.preprocessing import Imputer
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
 
-# Download data and view some of it
+# Download and clean the data
 print('Working directory: ' + os.getcwd())
 
 coffee_data = pd.read_csv(os.getcwd() + '\\Data\\CoffeeAndCodeLT2018.csv')
 
-clean = coffee_data.drop("Country", axis=1) 
+cleaned_data = coffee_data.drop("Country", axis=1) 
 
-clean.sample(5)
+cleaned_data = cleaned_data.dropna()
+
+# cleaned_data.sample(15)
+
+# Transform data
+
+encoder = LabelEncoder()
+
+coffee_time_cat = cleaned_data["CoffeeTime"]
+
+coffee_time_cat_encoded = encoder.fit_transform(coffee_time_cat)
+
+print(coffee_time_cat_encoded)
+print(encoder.classes_)
+
+hotencoder = OneHotEncoder()
+coffee_time_cat_1hot = hotencoder.fit_transform(coffee_time_cat_encoded.reshape(-1,1))
+print(coffee_time_cat_1hot.toarray)
 
 #
+
 
 #%%
