@@ -49,16 +49,13 @@ cleaned_data.sample(1)
 
 #
 #%%
-import numpy as np
-import matplotlib.pyplot as plt
+# Transform data
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.linear_model import LinearRegression
 
-# Transform data
 
 encoder = LabelEncoder()
-
 
 coffee_bugs_cat = cleaned_data["CoffeeSolveBugs"]
 
@@ -67,14 +64,20 @@ coffee_bugs_encoded = encoder.fit_transform(coffee_bugs_cat)
 print(coffee_bugs_encoded)
 print(encoder.classes_)
 
-
-
-
+cleaned_data["CoffeeSolveBugs"] = coffee_bugs_encoded
+cleaned_data.sample(1)
 #
 
 #%%
-lin_reg = LinearRegression()
-lin_reg.fit(housing_prepared, housing_labels)
+#import numpy as np
+import matplotlib.pyplot as plt
+
+def coffee_plot(X, yl):
+    plt.scatter(X[:,0], X[:,1], s=40, c=y)
+    plt.show()
+
+coffee_plot(cleaned_data, coffee_bugs_encoded)
+
 #
 
 
@@ -88,3 +91,6 @@ lin_reg.fit(housing_prepared, housing_labels)
 #hotencoder = OneHotEncoder()
 #coffee_time_cat_1hot = hotencoder.fit_transform(coffee_time_cat_encoded.reshape(-1,1))
 #print(coffee_time_cat_1hot.toarray())
+
+
+#%%
