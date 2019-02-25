@@ -33,17 +33,24 @@ import os
 # Download and clean the data
 print('Working directory: ' + os.getcwd())
 
-coffee_data = pd.read_csv(os.getcwd() + '\\Data\\CoffeeAndCodeLT2018.csv')
+coffee_data = pd.read_csv('Data/CoffeeAndCodeLT2018.csv')
 
-cleaned_data = coffee_data.drop("Country", axis=1) 
+print('Shape of raw CoffeeAndCodeLT2018.csv before preparing: ', coffee_data.shape)
+
+cleaned_data = coffee_data.dropna()
+
+print('Shape of Coffee Data after dropping columns with fields without values: ', cleaned_data.shape)
+
+cleaned_data = coffee_data.drop("Country", axis=1) # Only one country
 cleaned_data = cleaned_data.drop("AgeRange", axis=1) # Not gonna look at this
 cleaned_data = cleaned_data.drop("CoffeeType", axis=1) # Not gonna look at this
 cleaned_data = cleaned_data.drop("Gender", axis=1) # Not gonna look at this
-cleaned_data = cleaned_data.drop("CodingHours", axis=1) # Don't know what they measuared
+cleaned_data = cleaned_data.drop("CodingWithoutCoffee", axis=1) # Not gonna look at this
 
-cleaned_data = cleaned_data.dropna()
+print('Shape of Coffee Data after dropping columns we are not going to look at: ', cleaned_data.shape)
 
-cleaned_data.sample(1)
+print('\nData sample: ')
+cleaned_data.sample(5)
 
 #
 #%%
@@ -55,14 +62,17 @@ from sklearn.linear_model import LinearRegression
 
 encoder = LabelEncoder()
 
+## Bugs solved by coffee encoding
+
 coffee_bugs_cat = cleaned_data["CoffeeSolveBugs"]
 
 coffee_bugs_encoded = encoder.fit_transform(coffee_bugs_cat)
 
-print(coffee_bugs_encoded)
-print(encoder.classes_)
+print('Encoded classes:', encoder.classes_)
+print('Encoded array:', coffee_bugs_encoded)
 
 cleaned_data["CoffeeSolveBugs"] = coffee_bugs_encoded
+
 cleaned_data.sample(1)
 #
 
@@ -72,8 +82,8 @@ coffee_time_cat = cleaned_data["CoffeeTime"]
 
 coffee_time_cat_encoded = encoder.fit_transform(coffee_time_cat)
 
-print(coffee_time_cat_encoded)
-print(encoder.classes_)
+print('Encoded classes:', encoder.classes_)
+print('Encoded array:', coffee_time_cat_encoded)
 
 hotencoder = OneHotEncoder()
 coffee_time_cat_1hot = hotencoder.fit_transform(coffee_time_cat_encoded.reshape(-1,1))
@@ -81,7 +91,7 @@ print(hotencoder.categories_) # the classes are here renamed to number categorie
 print(coffee_time_cat_1hot.toarray())
 
 prepared_coffee = cleaned_data.drop("CoffeeTime", axis=1) # Not gonna look at this
-
+prepared_coffee
 
 #
 
