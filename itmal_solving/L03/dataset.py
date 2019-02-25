@@ -77,8 +77,6 @@ cleaned_data.sample(1)
 #
 
 #%%
-import numpy as np
-
 # One hot encoding for CoffeeTime
 coffee_time_cat = cleaned_data["CoffeeTime"]
 
@@ -103,13 +101,29 @@ prepared_coffee['BeforeCoding'] = coffee_time_1hot_arr[0:,3]
 prepared_coffee['InTheMorning'] = coffee_time_1hot_arr[0:,4]
 prepared_coffee['NoSpecificTime'] = coffee_time_1hot_arr[0:,5]
 prepared_coffee['WhileCoding'] = coffee_time_1hot_arr[0:,6]
-prepared_coffee.sample(5)
+prepared_coffee.sample(1)
 #
 
 #%%
-#import numpy as np
 import matplotlib.pyplot as plt
 
-prepared_coffee.plot(kind="scatter", x="CoffeeSolveBugs", y="CoffeeCupsPerDay")
+def coffee_plot(x, y, title, color_val):
+    plt.scatter(x,y, alpha=0.3, c=color_val)
+    plt.title(title)
+    plt.xlabel(x.name)
+    plt.ylabel(y.name)
+    plt.show()
 
+coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['CoffeeCupsPerDay'], 'Coffe solves bugs color visualized', coffee_bugs_encoded)
+coffee_plot(prepared_coffee['CodingHours'], prepared_coffee['CoffeeCupsPerDay'], 'Does coders drink more coffee?', coffee_bugs_encoded)
+
+# coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['AfterCoding'])
+# coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['AllTheTime'])
+# coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['BeforeAndWhileCoding'])
+# coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['BeforeCoding'])
+# coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['InTheMorning'])
+# coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['NoSpecificTime'])
+# coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['WhileCoding'])
 #
+
+#%%
