@@ -114,8 +114,11 @@ def coffee_plot(x, y, title, color_val):
     plt.ylabel(y.name)
     plt.show()
 
-coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['CoffeeCupsPerDay'], 'Coffe solves bugs color visualized', coffee_bugs_encoded)
-coffee_plot(prepared_coffee['CodingHours'], prepared_coffee['CoffeeCupsPerDay'], 'Does coders drink more coffee?', coffee_bugs_encoded)
+# def plot_feature_against_all():
+#     a = ''
+
+coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['CoffeeCupsPerDay'], 'Coffee solves bugs color visualized', coffee_bugs_encoded)
+coffee_plot(prepared_coffee['CodingHours'], prepared_coffee['CoffeeCupsPerDay'], 'Does coders drink more coffee because they believe it helps them solve bugs?', coffee_bugs_encoded)
 
 # coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['AfterCoding'])
 # coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['AllTheTime'])
@@ -125,5 +128,18 @@ coffee_plot(prepared_coffee['CodingHours'], prepared_coffee['CoffeeCupsPerDay'],
 # coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['NoSpecificTime'])
 # coffee_plot(prepared_coffee['CoffeeSolveBugs'], prepared_coffee['WhileCoding'])
 #
+
+#%%
+# Train test set
+from sklearn.model_selection import train_test_split
+
+y = prepared_coffee['CodingHours']
+X = prepared_coffee.drop('CodingHours', axis='columns')
+
+X_train, X_test, y_train, y_test = train_test_split(prepared_coffee, y, random_state=42)
+
+X.sample(1)
+#
+
 
 #%%
