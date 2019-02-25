@@ -27,13 +27,8 @@
 #%%
 # TODO: Qg
 
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import os
-from sklearn.preprocessing import Imputer
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import OneHotEncoder
 
 # Download and clean the data
 print('Working directory: ' + os.getcwd())
@@ -44,28 +39,52 @@ cleaned_data = coffee_data.drop("Country", axis=1)
 cleaned_data = cleaned_data.drop("AgeRange", axis=1) # Not gonna look at this
 cleaned_data = cleaned_data.drop("CoffeeType", axis=1) # Not gonna look at this
 cleaned_data = cleaned_data.drop("Gender", axis=1) # Not gonna look at this
+cleaned_data = cleaned_data.drop("CoffeeTime", axis=1) # Not gonna look at this
+cleaned_data = cleaned_data.drop("CodingWithoutCoffee", axis=1)
 cleaned_data = cleaned_data.drop("CodingHours", axis=1) # Don't know what they measuared
 
 cleaned_data = cleaned_data.dropna()
+
+cleaned_data.sample(1)
+
+#
+#%%
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.linear_model import LinearRegression
 
 # Transform data
 
 encoder = LabelEncoder()
 
-coffee_time_cat = cleaned_data["CoffeeTime"]
 
-coffee_time_cat_encoded = encoder.fit_transform(coffee_time_cat)
+coffee_bugs_cat = cleaned_data["CoffeeSolveBugs"]
 
-print(coffee_time_cat_encoded)
+coffee_bugs_encoded = encoder.fit_transform(coffee_bugs_cat)
+
+print(coffee_bugs_encoded)
 print(encoder.classes_)
 
-hotencoder = OneHotEncoder()
-coffee_time_cat_1hot = hotencoder.fit_transform(coffee_time_cat_encoded.reshape(-1,1))
-print(coffee_time_cat_1hot.toarray())
 
-cleaned_data.sample(20)
+
 
 #
 
-
 #%%
+lin_reg = LinearRegression()
+lin_reg.fit(housing_prepared, housing_labels)
+#
+
+
+# coffee_time_cat = cleaned_data["CoffeeTime"]
+
+# coffee_time_cat_encoded = encoder.fit_transform(coffee_time_cat)
+
+#print(coffee_time_cat_encoded)
+#print(encoder.classes_)
+
+#hotencoder = OneHotEncoder()
+#coffee_time_cat_1hot = hotencoder.fit_transform(coffee_time_cat_encoded.reshape(-1,1))
+#print(coffee_time_cat_1hot.toarray())
