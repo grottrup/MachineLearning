@@ -39,8 +39,6 @@ cleaned_data = coffee_data.drop("Country", axis=1)
 cleaned_data = cleaned_data.drop("AgeRange", axis=1) # Not gonna look at this
 cleaned_data = cleaned_data.drop("CoffeeType", axis=1) # Not gonna look at this
 cleaned_data = cleaned_data.drop("Gender", axis=1) # Not gonna look at this
-cleaned_data = cleaned_data.drop("CoffeeTime", axis=1) # Not gonna look at this
-cleaned_data = cleaned_data.drop("CodingWithoutCoffee", axis=1)
 cleaned_data = cleaned_data.drop("CodingHours", axis=1) # Don't know what they measuared
 
 cleaned_data = cleaned_data.dropna()
@@ -69,28 +67,24 @@ cleaned_data.sample(1)
 #
 
 #%%
+# One hot encoding for CoffeeTime
+coffee_time_cat = cleaned_data["CoffeeTime"]
+
+coffee_time_cat_encoded = encoder.fit_transform(coffee_time_cat)
+
+print(coffee_time_cat_encoded)
+print(encoder.classes_)
+
+hotencoder = OneHotEncoder()
+coffee_time_cat_1hot = hotencoder.fit_transform(coffee_time_cat_encoded.reshape(-1,1))
+print(coffee_time_cat_1hot.toarray())
+print(hotencoder.classes_)
+#
+
+#%%
 #import numpy as np
 import matplotlib.pyplot as plt
 
-def coffee_plot(X, yl):
-    plt.scatter(X[:,0], X[:,1], s=40, c=y)
-    plt.show()
-
-coffee_plot(cleaned_data, coffee_bugs_encoded)
+cleaned_data.plot(kind="scatter", x="CoffeeSolveBugs", y="CoffeeCupsPerDay")
 
 #
-
-
-# coffee_time_cat = cleaned_data["CoffeeTime"]
-
-# coffee_time_cat_encoded = encoder.fit_transform(coffee_time_cat)
-
-#print(coffee_time_cat_encoded)
-#print(encoder.classes_)
-
-#hotencoder = OneHotEncoder()
-#coffee_time_cat_1hot = hotencoder.fit_transform(coffee_time_cat_encoded.reshape(-1,1))
-#print(coffee_time_cat_1hot.toarray())
-
-
-#%%
