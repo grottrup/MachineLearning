@@ -77,14 +77,18 @@ print(encoder.classes_)
 
 hotencoder = OneHotEncoder()
 coffee_time_cat_1hot = hotencoder.fit_transform(coffee_time_cat_encoded.reshape(-1,1))
+print(hotencoder.categories_) # the classes are here renamed to number categories
 print(coffee_time_cat_1hot.toarray())
-print(hotencoder.classes_)
+
+prepared_coffee = cleaned_data.drop("CoffeeTime", axis=1) # Not gonna look at this
+
+
 #
 
 #%%
 #import numpy as np
 import matplotlib.pyplot as plt
 
-cleaned_data.plot(kind="scatter", x="CoffeeSolveBugs", y="CoffeeCupsPerDay")
+prepared_coffee.plot(kind="scatter", x="CoffeeSolveBugs", y="CoffeeCupsPerDay")
 
 #
