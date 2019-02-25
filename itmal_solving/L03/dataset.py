@@ -77,6 +77,8 @@ cleaned_data.sample(1)
 #
 
 #%%
+import numpy as np
+
 # One hot encoding for CoffeeTime
 coffee_time_cat = cleaned_data["CoffeeTime"]
 
@@ -87,12 +89,21 @@ print('Encoded array:', coffee_time_cat_encoded)
 
 hotencoder = OneHotEncoder()
 coffee_time_cat_1hot = hotencoder.fit_transform(coffee_time_cat_encoded.reshape(-1,1))
-print(hotencoder.categories_) # the classes are here renamed to number categories
-print(coffee_time_cat_1hot.toarray())
+print('Encoded 1hot number categories:', hotencoder.categories_) # the classes are here renamed to number categories
+coffee_time_1hot_arr = coffee_time_cat_1hot.toarray()
+print('Encoded 1hot array:', coffee_time_1hot_arr)
 
-prepared_coffee = cleaned_data.drop("CoffeeTime", axis=1) # Not gonna look at this
-prepared_coffee
+prepared_coffee = cleaned_data.drop("CoffeeTime", axis=1) # Change out with 1hot
 
+## Insert new columns
+prepared_coffee['AfterCoding'] = coffee_time_1hot_arr[0:,0]
+prepared_coffee['AllTheTime'] = coffee_time_1hot_arr[0:,1]
+prepared_coffee['BeforeAndWhileCoding'] = coffee_time_1hot_arr[0:,2]
+prepared_coffee['BeforeCoding'] = coffee_time_1hot_arr[0:,3]
+prepared_coffee['InTheMorning'] = coffee_time_1hot_arr[0:,4]
+prepared_coffee['NoSpecificTime'] = coffee_time_1hot_arr[0:,5]
+prepared_coffee['WhileCoding'] = coffee_time_1hot_arr[0:,6]
+prepared_coffee.sample(5)
 #
 
 #%%
