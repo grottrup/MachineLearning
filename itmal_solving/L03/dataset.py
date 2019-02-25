@@ -136,9 +136,15 @@ from sklearn.model_selection import train_test_split
 y = prepared_coffee['CodingHours']
 X = prepared_coffee.drop('CodingHours', axis='columns')
 
-X_train, X_test, y_train, y_test = train_test_split(prepared_coffee, y, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 
-X.sample(1)
+hours_number = 11
+y_train_hours = (y_train == hours_number)
+y_test_hours = (y_test == hours_number)
+
+print("Number of Iraq incidents in y_train: ", (y_train_hours == True).sum())
+print("Number of Iraq incidents in y_test: ", (y_test_hours == True).sum())
+
 #
 
 
