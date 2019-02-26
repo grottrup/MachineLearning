@@ -130,22 +130,53 @@ coffee_plot(prepared_coffee['CodingHours'], prepared_coffee['CoffeeCupsPerDay'],
 #
 
 #%%
-# Train test set
-from sklearn.model_selection import train_test_split
+# split test set
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from sklearn.metrics import mean_squared_error
+from sklearn.linear_model import SGDClassifier
 
-y = prepared_coffee['CodingHours']
-X = prepared_coffee.drop('CodingHours', axis='columns')
+y = prepared_coffee['CoffeeSolveBugs']
+X = prepared_coffee[['CodingHours', 'CoffeeSolveBugs', 'CoffeeCupsPerDay']]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 
-hours_number = 11
-y_train_hours = (y_train == hours_number)
-y_test_hours = (y_test == hours_number)
+print("X_train.shape=",X_train.shape,", X_test.shape=",X_test.shape)
 
-print("Number of Iraq incidents in y_train: ", (y_train_hours == True).sum())
-print("Number of Iraq incidents in y_test: ", (y_test_hours == True).sum())
+lin_reg = LinearRegression()
+lin_reg.fit(X_train, y_train)
+y_pred = lin_reg.predict(X_train)
+lin_mse = mean_squared_error(X_train['CodingHours'], y_pred)
+print('Lin MSE', lin_mse) # 1.932709217791479e-30 meaning it is a really bad fit
+
+#%%
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import cross_val_predict
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+# Metrics
+## Confusion matrix
+clf = SGDClassifier(random_state=42)
+print('Testing', clf.__class__.__name__,)
+
+clf.fit(X_train, y_train)
+
+y_pred = cross_val_predict(clf, X_test, y_test, cv=3)
+confusion_matrix = confusion_matrix(y_test, y_pred)
+print(confusion_matrix)
+plt.matshow(confusion_matrix)
+plt.show()
+
+def clf_score(scoring_method, y_tester, y_prediction):
+    score = scoring_method(y_tester, y_prediction)
+    print(scoring_method.__name__, ": ", score)
+
+clf_score(accuracy_score, y_test, y_pred)
+#clf_score(precision_score, y_test, y_pred)
+#clf_score(recall_score, y_test, y_pred)
+#clf_score(f1_score, y_test, y_pred)
 
 #
 
 
 #%%
+
