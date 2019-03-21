@@ -8,7 +8,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 from sklearn.datasets import fetch_mldata
-from keras.datasets import mnist
+#from keras.datasets import mnist
 from sklearn import datasets
 
 def MOON_GetDataSet(n_samples=100, noise=0.1, random_state=0):
